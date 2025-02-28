@@ -1,5 +1,5 @@
 export { Task } from './task';
 export { Timer } from './timer';
 export { Menu } from './menu';
-export { Card } from './UI/card';
+export { MenuItem } from './UI/MenuItem';
 export { ToggleMenu } from './UI/toggle-menu';

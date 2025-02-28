@@ -1,5 +1,3 @@
-import { Card } from './UI/card';
-
 interface props {
   name: string;
   startHour: `${number}:${number}`;
@@ -8,10 +6,10 @@ interface props {
 
 export const Task = ({ name, startHour, endHour }: props) => {
   return (
-    <Card>
+    <div>
       <h2 className="font-medium">{name}</h2>
       <span>{startHour}</span>
       <span>{endHour}</span>
-    </Card>
+    </div>
   );
 };
