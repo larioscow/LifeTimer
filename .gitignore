@@ -24,5 +24,4 @@ dist-ssr
 *.sw?
 *.svg
 
-vite.config.ts
 eslint.config.js
