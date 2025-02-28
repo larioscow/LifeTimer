@@ -1,0 +1,12 @@
+@import url('https://fonts.googleapis.com/css2?family=DM+Serif+Text:ital@0;1&display=swap');
+@import 'tailwindcss';
+
+@theme {
+  --font-dm: 'DM Serif Text', sans-serif;
+}
+
+@layer components {
+  .card {
+    @apply rounded-lg border shadow-sm p-4;
+  }
+}
