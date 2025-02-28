@@ -11,7 +11,6 @@ export const Task = ({ name, startHour, endHour }: props) => {
     <Card>
       <h2 className="font-medium">{name}</h2>
       <span>{startHour}</span>
-      <br />
       <span>{endHour}</span>
     </Card>
   );
