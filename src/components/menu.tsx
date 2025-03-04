@@ -25,7 +25,10 @@ export const Menu = () => {
     <>
       {isOpen && (
         <div className="flex flex-col w-2/3 space-y-5">
-          <Timer className="flex-center text-5xl font-bold antialiased font-dm" />
+          <Timer
+            className="flex-center text-5xl font-bold antialiased font-dm"
+            type="minutesTimer"
+          />
           <div className="flex flex-col space-y-1">
             {options.map((option, key) => (
               <MenuItem tittle={option.tittle} icon={option.icon} key={key} />

@@ -8,7 +8,7 @@ interface MenuState {
 
 // Creamos el store tipado
 const useMenuStore = create<MenuState>((set) => ({
-  isOpen: true,
+  isOpen: false,
   toggle: () => set((state) => ({ isOpen: !state.isOpen })),
 }));
 
