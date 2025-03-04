@@ -23,6 +23,8 @@ export const useTimer = ({ type = 'minutesTimer' }: timerProps) => {
   const second = currentTime.getSeconds();
 
   const formatTime = (time: number) => time.toString().padStart(2, '0');
+  const formatHour = (time: string) =>
+    time.charAt(0) === '0' ? time.slice(1) : time;
   const timeToInt = (time: `${string}:${string}`) =>
     time.split(':').map((x) => Number(x));
 
@@ -32,5 +34,5 @@ export const useTimer = ({ type = 'minutesTimer' }: timerProps) => {
     hourTimer: hour,
   }[type];
 
-  return { hour, minute, second, timer, timeToInt, formatTime };
+  return { hour, minute, second, timer, timeToInt, formatTime, formatHour };
 };

@@ -10,18 +10,18 @@ export const Tasks = () => {
     setTasks([
       {
         name: 'Do the dishes',
-        startHour: '5:00',
-        endHour: '6:30',
+        startHour: '05:00',
+        endHour: '06:30',
       },
       {
         name: 'UDG',
-        startHour: '7:00',
-        endHour: '9:00',
+        startHour: '07:00',
+        endHour: '09:00',
       },
       {
-        name: 'Programar esta cosa',
-        startHour: '22:00',
-        endHour: '23:49',
+        name: 'Excercise',
+        startHour: '09:00',
+        endHour: '11:00',
       },
       {
         name: 'Morir',

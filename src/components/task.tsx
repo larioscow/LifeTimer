@@ -10,7 +10,8 @@ export interface Task {
 }
 
 export const TaskItem = ({ name, startHour, endHour }: Task) => {
-  const { timer, hour, minute, second, timeToInt, formatTime } = useTimer({});
+  const { timer, hour, minute, second, timeToInt, formatTime, formatHour } =
+    useTimer({});
   const [isCurrent, setIsCurrent] = useState(false);
   const [isDone, setIsDone] = useState(false);
   const [percentage, setPercentage] = useState(0);
@@ -27,20 +28,21 @@ export const TaskItem = ({ name, startHour, endHour }: Task) => {
     );
     const newPercentage = (minutesFromStart * 100) / taskTotalMinutes;
 
-    const isTaskCurrent = startHour <= timer && endHour >= timer;
-
+    const currentHour = `${formatTime(hour)}:${formatTime(minute)}`;
     const endHourString = `${formatTime(hourEnd)}:${formatTime(minuteEnd)}`;
+
+    const isTaskCurrent = startHour <= currentHour && endHour >= currentHour;
 
     setIsCurrent(isTaskCurrent);
     setPercentage(isTaskCurrent ? newPercentage : 0);
-    setIsDone(endHourString < timer);
+    setIsDone(endHourString < currentHour);
   }, [second, endHour, hour, minute, startHour, timeToInt, timer, formatTime]);
 
   return (
     <div
       className={clsx(
         'border-2 rounded-md min-w-64 w-full font-geist relative p-3 transition-all duration-300',
-        isDone && 'opacity-60',
+        isDone && 'opacity-50',
         !isDone && !isCurrent && 'opacity-60'
       )}
     >
@@ -50,11 +52,12 @@ export const TaskItem = ({ name, startHour, endHour }: Task) => {
           {name}
         </h2>
         <h3 className="flex space-x-1 text-sm">
-          <span>{startHour}</span>
+          <span>{formatHour(startHour)}</span>
           <span>-</span>
           <span>{endHour}</span>
         </h3>
       </div>
+      {isDone}
     </div>
   );
 };
