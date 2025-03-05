@@ -8,60 +8,52 @@ export const Tasks = () => {
   const [tasks, setTasks] = useState<Tasks>([]);
   const containerRef = useRef<HTMLDivElement>(null);
   const { within } = useTimer({});
+  const current = tasks.findIndex((task) =>
+    within(task.startHour, task.endHour)
+  );
 
   useEffect(() => {
     const taskArr = [
       {
-        name: 'Do the dishes',
-        startHour: '05:00',
-        endHour: '06:30',
+        name: 'Speak with my anoying girlfriend',
+        startHour: '19:00',
+        endHour: '22:00',
       },
       {
-        name: 'UDG',
-        startHour: '07:00',
-        endHour: '09:00',
-      },
-      {
-        name: 'Excercise',
-        startHour: '09:00',
-        endHour: '11:00',
-      },
-      {
-        name: 'Morir',
-        startHour: '11:00',
-        endHour: '12:00',
-      },
-      {
-        name: 'Morir',
-        startHour: '13:35',
-        endHour: '14:00',
+        name: 'Play LoL',
+        startHour: '22:00',
+        endHour: '24:00',
       },
     ];
     setTasks(taskArr);
   }, []);
 
   useEffect(() => {
-    const handleResize = () => {
+    const handleScroll = () => {
       const containerWidth = containerRef.current?.scrollWidth ?? 0;
       const elements = containerRef.current?.childNodes.length ?? 1;
-      const taskArr = [...tasks];
-      const current = taskArr.findIndex((task) =>
-        within(task.startHour, task.endHour)
-      );
+
       const scrollPosition = (current / elements) * containerWidth;
+
+      // Realiza el scroll suave al cargar o cambiar el tamaño de la pantalla
+      containerRef.current?.scrollTo({
+        left: scrollPosition,
+        behavior: 'smooth',
+      });
+
       console.log(scrollPosition);
     };
 
-    window.addEventListener('resize', handleResize);
-    handleResize(); // Ejecuta la función inmediatamente al montar el componente
+    window.addEventListener('resize', handleScroll);
+    handleScroll(); // Ejecuta el scroll al cargar el componente
 
-    return () => window.removeEventListener('resize', handleResize);
-  }, [tasks, within]);
+    return () => window.removeEventListener('resize', handleScroll);
+  }, [tasks, current]);
 
   return (
     <div
       ref={containerRef}
-      className="h-full w-5/6 flex flex-col items-center space-y-2.5 md:space-x-2.5 md:space-y-0 md:flex-row md:overflow-x-scroll scroll-smooth snap-x"
+      className="h-full md:px-6 w-5/6 flex flex-col items-center space-y-2.5 md:space-x-2.5 md:space-y-0 md:flex-row md:overflow-x-scroll scroll-smooth snap-x"
     >
       {tasks.map((task, key) => (
         <TaskItem

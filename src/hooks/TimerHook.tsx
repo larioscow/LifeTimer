@@ -52,6 +52,10 @@ export const useTimer = ({ type = 'minutesTimer' }: timerProps) => {
       endHourString,
     };
   };
+  const isNewTask = (startHour: string) => {
+    const currentHour = `${formatTime(hour)}:${formatTime(minute)}`;
+    return startHour === currentHour;
+  };
 
   const timer = {
     secondsTimer: `${hour}:${formatTime(minute)}:${formatTime(second)}`,
@@ -69,5 +73,6 @@ export const useTimer = ({ type = 'minutesTimer' }: timerProps) => {
     formatHour,
     within,
     getProgress,
+    isNewTask,
   };
 };

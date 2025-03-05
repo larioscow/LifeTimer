@@ -31,7 +31,7 @@ export const TaskItem = ({ name, startHour, endHour }: Task) => {
   return (
     <div
       className={clsx(
-        'border-2 rounded-md min-w-64 w-full font-geist relative p-3 transition-all duration-300 md:h-52 md:min-w-96 snap-center',
+        'border-2 rounded-md min-w-64 w-full font-geist relative p-3 transition-all duration-150 md:h-52 md:min-w-96 snap-center',
         isDone && 'opacity-50',
         !isDone && !isCurrent && 'opacity-60'
       )}
