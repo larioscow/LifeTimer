@@ -1,11 +1,12 @@
 import { useEffect, useRef, useState } from 'react';
-import { TaskItem, Task } from './task';
+import { TaskItem } from './task';
 import { useTimer } from '../hooks/TimerHook';
-
-type Tasks = Task[];
+import useTaskStore from '../stores/useTaskStore';
 
 export const Tasks = () => {
-  const [tasks, setTasks] = useState<Tasks>([]);
+  const tasks = useTaskStore((state) => state.tasks);
+  const sortTasks = useTaskStore((state) => state.sortTasks);
+  const [isSorted, setIsSorted] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
   const { within } = useTimer({});
   const current = tasks.findIndex((task) =>
@@ -13,20 +14,11 @@ export const Tasks = () => {
   );
 
   useEffect(() => {
-    const taskArr = [
-      {
-        name: 'Speak with my anoying girlfriend',
-        startHour: '19:00',
-        endHour: '22:00',
-      },
-      {
-        name: 'Play LoL',
-        startHour: '22:00',
-        endHour: '24:00',
-      },
-    ];
-    setTasks(taskArr);
-  }, []);
+    if (!isSorted) {
+      sortTasks();
+      setIsSorted(true);
+    }
+  }, [sortTasks, isSorted]);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -35,7 +27,6 @@ export const Tasks = () => {
 
       const scrollPosition = (current / elements) * containerWidth;
 
-      // Realiza el scroll suave al cargar o cambiar el tamaño de la pantalla
       containerRef.current?.scrollTo({
         left: scrollPosition,
         behavior: 'smooth',
@@ -45,7 +36,7 @@ export const Tasks = () => {
     };
 
     window.addEventListener('resize', handleScroll);
-    handleScroll(); // Ejecuta el scroll al cargar el componente
+    handleScroll();
 
     return () => window.removeEventListener('resize', handleScroll);
   }, [tasks, current]);
@@ -63,7 +54,9 @@ export const Tasks = () => {
           endHour={task.endHour}
         />
       ))}
-      {!tasks[0] && <span>No tasks</span>}
+      {!tasks[0] && (
+        <span className="text-xl text-center w-full">Add a task.</span>
+      )}
     </div>
   );
 };

@@ -23,12 +23,10 @@ export const useTimer = ({ type = 'minutesTimer' }: timerProps) => {
   const second = currentTime.getSeconds();
 
   const formatTime = (time: number) => time.toString().padStart(2, '0');
-  const formatHour = (time: string) =>
-    time.charAt(0) === '0' ? time.slice(1) : time;
   const timeToInt = (time: string) => time.split(':').map((x) => Number(x));
   const within = (startHour: string, endHour: string) => {
     const currentHour = `${formatTime(hour)}:${formatTime(minute)}`;
-    const isTaskCurrent = startHour <= currentHour && endHour >= currentHour;
+    const isTaskCurrent = startHour <= currentHour && endHour > currentHour;
     return isTaskCurrent;
   };
   const getProgress = (startHour: string, endHour: string) => {
@@ -56,6 +54,22 @@ export const useTimer = ({ type = 'minutesTimer' }: timerProps) => {
     const currentHour = `${formatTime(hour)}:${formatTime(minute)}`;
     return startHour === currentHour;
   };
+  const to12Hour = (startHour: string) => {
+    const intHour = timeToInt(startHour)[0];
+    const intMinute = timeToInt(startHour)[1];
+    return intHour > 12
+      ? `${formatTime(intHour - 12)}:${formatTime(intMinute)} PM`
+      : `${formatTime(intHour)}:${formatTime(intMinute)} AM`;
+  };
+  const now = () => {
+    const currentTime = new Date();
+    const formattedHour = currentTime.getHours().toString().padStart(2, '0');
+    const formattedMinute = currentTime
+      .getMinutes()
+      .toString()
+      .padStart(2, '0');
+    return `${formattedHour}:${formattedMinute}`;
+  };
 
   const timer = {
     secondsTimer: `${hour}:${formatTime(minute)}:${formatTime(second)}`,
@@ -70,9 +84,10 @@ export const useTimer = ({ type = 'minutesTimer' }: timerProps) => {
     timer,
     timeToInt,
     formatTime,
-    formatHour,
     within,
     getProgress,
     isNewTask,
+    to12Hour,
+    now,
   };
 };

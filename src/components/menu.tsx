@@ -1,11 +1,11 @@
 import { Timer } from './timer';
 import { MenuItem } from './UI/MenuItem';
-import useMenuStore from '../stores/useMenuStore';
-import { IoAddCircleOutline } from 'react-icons/io5';
 import { IoAnalytics } from 'react-icons/io5';
 import { IoPencil } from 'react-icons/io5';
-
 import { ReactNode } from 'react';
+import { AddTask } from './addTask';
+
+import useMenuStore from '../stores/useMenuStore';
 
 interface option {
   tittle: string;
@@ -14,22 +14,23 @@ interface option {
 type options = option[];
 
 const options: options = [
-  { tittle: 'Add a task', icon: <IoAddCircleOutline /> },
   { tittle: 'Edit schedule', icon: <IoPencil /> },
   { tittle: 'Metrics', icon: <IoAnalytics /> },
 ];
 
 export const Menu = () => {
-  const { isOpen } = useMenuStore();
+  const { isMenuOpen } = useMenuStore();
+
   return (
     <>
-      {isOpen && (
-        <div className="flex flex-col w-2/3 space-y-5">
+      {isMenuOpen && (
+        <div className="flex flex-col w-2/3 space-y-10 items-center">
           <Timer
             className="flex-center text-5xl font-bold antialiased font-dm"
             type="minutesTimer"
           />
-          <div className="flex flex-col space-y-1">
+          <AddTask></AddTask>
+          <div className="flex flex-col space-y-2 w-full">
             {options.map((option, key) => (
               <MenuItem tittle={option.tittle} icon={option.icon} key={key} />
             ))}

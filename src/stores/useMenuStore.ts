@@ -2,14 +2,15 @@ import { create } from 'zustand';
 
 // Definimos la interfaz para el estado del menú
 interface MenuState {
-  isOpen: boolean;
+  isMenuOpen: boolean;
   toggle: () => void;
 }
 
 // Creamos el store tipado
 const useMenuStore = create<MenuState>((set) => ({
-  isOpen: false,
-  toggle: () => set((state) => ({ isOpen: !state.isOpen })),
+  isMenuOpen: false,
+  isAddTaskOpen: false,
+  toggle: () => set((state) => ({ isMenuOpen: !state.isMenuOpen })),
 }));
 
 export default useMenuStore;

@@ -10,7 +10,7 @@ export interface Task {
 }
 
 export const TaskItem = ({ name, startHour, endHour }: Task) => {
-  const { formatHour, within, getProgress } = useTimer({});
+  const { within, getProgress, to12Hour } = useTimer({});
   const [isCurrent, setIsCurrent] = useState(false);
   const [isDone, setIsDone] = useState(false);
   const [percentage, setPercentage] = useState(0);
@@ -36,14 +36,14 @@ export const TaskItem = ({ name, startHour, endHour }: Task) => {
         !isDone && !isCurrent && 'opacity-60'
       )}
     >
-      <div className="relative z-10 flex items-center justify-between p-3">
+      <div className="relative z-10 flex  justify-between p-3">
         <h2 className={clsx('font-medium', isDone && 'line-through')}>
           {name}
         </h2>
         <h3 className="flex space-x-1 text-sm">
-          <span>{formatHour(startHour)}</span>
+          <span>{to12Hour(startHour)}</span>
           <span>-</span>
-          <span>{endHour}</span>
+          <span>{to12Hour(endHour)}</span>
         </h3>
       </div>
       {isCurrent && <Progress percentage={percentage} />}
