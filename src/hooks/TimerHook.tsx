@@ -58,8 +58,8 @@ export const useTimer = ({ type = 'minutesTimer' }: timerProps) => {
     const intHour = timeToInt(startHour)[0];
     const intMinute = timeToInt(startHour)[1];
     return intHour > 12
-      ? `${formatTime(intHour - 12)}:${formatTime(intMinute)} PM`
-      : `${formatTime(intHour)}:${formatTime(intMinute)} AM`;
+      ? `${intHour - 12}:${formatTime(intMinute)} PM`
+      : `${intHour}:${formatTime(intMinute)} AM`;
   };
   const now = () => {
     const currentTime = new Date();

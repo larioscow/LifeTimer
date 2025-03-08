@@ -3,7 +3,7 @@ import useTaskStore from '../stores/useTaskStore'; // Ajusta la ruta según tu e
 import useMenuStore from '../stores/useMenuStore';
 
 export const AddTask = () => {
-  const { toggle } = useMenuStore();
+  const { closeAll } = useMenuStore();
 
   // Obtener la función para añadir tareas del store
   const addTask = useTaskStore((state) => state.addTask);
@@ -44,6 +44,7 @@ export const AddTask = () => {
       startHour,
       endHour,
     });
+    console.log(startHour, endHour);
 
     // Limpiar el formulario
     setTaskName('');
@@ -55,11 +56,11 @@ export const AddTask = () => {
       .toString()
       .padStart(2, '0');
     setStartHour(`${formattedHour}:${formattedMinute}`);
-    toggle();
+    closeAll();
   };
 
   return (
-    <div className="flex flex-col space-y-4 border-2 rounded-md p-4 w-full shadow-md bg-white">
+    <div className="flex flex-col space-y-4 border-2 rounded-md p-4 w-5/6  shadow-md bg-white">
       <h2 className="text-xl font-bold text-center">Add Task</h2>
 
       <form onSubmit={handleSubmit} className="space-y-4">

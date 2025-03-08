@@ -36,7 +36,7 @@ export const TaskItem = ({ name, startHour, endHour }: Task) => {
         !isDone && !isCurrent && 'opacity-60'
       )}
     >
-      <div className="relative z-10 flex  justify-between p-3">
+      <div className="relative z-10 flex justify-between items-center p-3">
         <h2 className={clsx('font-medium', isDone && 'line-through')}>
           {name}
         </h2>
