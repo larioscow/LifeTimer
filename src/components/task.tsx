@@ -11,6 +11,7 @@ export interface Task {
 
 export const TaskItem = ({ name, startHour, endHour }: Task) => {
   const { within, getProgress, to12Hour } = useTimer({});
+
   const [isCurrent, setIsCurrent] = useState(false);
   const [isDone, setIsDone] = useState(false);
   const [percentage, setPercentage] = useState(0);
