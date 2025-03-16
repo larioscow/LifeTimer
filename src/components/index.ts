@@ -7,7 +7,6 @@ export { AddTask } from './addTask';
 export { Progress } from './UI/progress';
 export { MenuItem } from './UI/MenuItem';
 export { ToggleMenu } from './UI/toggle-menu';
-export { EditTasks } from './UI/editTasks';
 export { ToggleAddTask } from './UI/toggleAddTask';
 
 export type { Task } from './task';

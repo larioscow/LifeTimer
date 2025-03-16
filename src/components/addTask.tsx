@@ -3,7 +3,7 @@ import useTaskStore from '../stores/useTaskStore'; // Ajusta la ruta según tu e
 import useMenuStore from '../stores/useMenuStore';
 
 export const AddTask = () => {
-  const { closeAll } = useMenuStore();
+  const { toggle } = useMenuStore();
 
   // Obtener la función para añadir tareas del store
   const addTask = useTaskStore((state) => state.addTask);
@@ -44,7 +44,6 @@ export const AddTask = () => {
       startHour,
       endHour,
     });
-    console.log(startHour, endHour);
 
     // Limpiar el formulario
     setTaskName('');
@@ -56,14 +55,14 @@ export const AddTask = () => {
       .toString()
       .padStart(2, '0');
     setStartHour(`${formattedHour}:${formattedMinute}`);
-    closeAll();
+    toggle();
   };
 
   return (
-    <div className="flex flex-col space-y-4 border-2 rounded-md p-4 w-5/6  shadow-md bg-white">
-      <h2 className="text-xl font-bold text-center">Add Task</h2>
+    <div className="flex flex-col space-y-4 border-2 rounded-md p-6 w-full shadow-md bg-white lg:p-8 lg:gap-5">
+      <h2 className="text-xl font-bold text-center lg:text-2xl">Add Task</h2>
 
-      <form onSubmit={handleSubmit} className="space-y-4">
+      <form onSubmit={handleSubmit} className="space-y-4 lg:space-y-6">
         <div className="flex flex-col">
           <label htmlFor="taskName" className="font-medium mb-1">
             Task Name:
@@ -74,7 +73,7 @@ export const AddTask = () => {
             value={taskName}
             onChange={(e) => setTaskName(e.target.value)}
             placeholder="Enter task name"
-            className="border rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-gray-900"
+            className="border rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-gray-900 md:py-3"
             required
           />
         </div>
@@ -87,7 +86,7 @@ export const AddTask = () => {
               id="startHour"
               value={startHour}
               onChange={(e) => setStartHour(e.target.value)}
-              className="border rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-gray-900"
+              className="border rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-gray-900 md:py-3"
               required
             />
           </label>
@@ -99,7 +98,7 @@ export const AddTask = () => {
               id="endHour"
               value={endHour}
               onChange={(e) => setEndHour(e.target.value)}
-              className="border rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-gray-900"
+              className="border rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-gray-900 md:py-3"
               required
             />
           </label>
@@ -107,7 +106,7 @@ export const AddTask = () => {
 
         <button
           type="submit"
-          className="w-full bg-black hover:bg-neutral-900 text-white font-medium py-2 px-4 rounded-md transition duration-150"
+          className="w-full md:py-3 bg-black hover:bg-neutral-900 text-white font-medium py-2 px-4 rounded-md transition duration-150"
         >
           Add Task
         </button>

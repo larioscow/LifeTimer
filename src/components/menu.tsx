@@ -24,7 +24,7 @@ export const Menu = () => {
   return (
     <>
       {isMenuOpen && (
-        <div className="flex flex-col w-2/3 space-y-10 items-center">
+        <div className="flex flex-col w-5/6 md:max-w-4xl space-y-10 items-center">
           <Timer
             className="flex-center text-5xl font-bold antialiased font-dm"
             type="minutesTimer"
