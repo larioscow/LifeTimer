@@ -82,17 +82,15 @@ export const EditTaskWindow = ({ name, startHour, endHour, index }: Props) => {
               Cancel
             </button>
           </div>
-          <div className="flex w-full justify-end md:col-span-2">
-            <button
-              onClick={(e) => {
-                e.preventDefault();
-                setConfirm(true);
-              }}
-              className="text-red-600 bg-red-200 mt-4 lg:mt-12 text-right font-medium cursor-pointer p-3 rounded-md w-fit"
-            >
-              Delete task
-            </button>
-          </div>
+          <button
+            onClick={(e) => {
+              e.preventDefault();
+              setConfirm(true);
+            }}
+            className="text-red-600 text-center font-medium cursor-pointer md:col-span-2 mt-4 text-md md:text-lg md:mt-6 lg:mt-8"
+          >
+            Delete task
+          </button>
           <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
             {confirm && (
               <div className="flex flex-col bg-white p-6 border-2 rounded-md w-48 gap-3">
