@@ -87,7 +87,7 @@ export const EditTaskWindow = ({ name, startHour, endHour, index }: Props) => {
               e.preventDefault();
               setConfirm(true);
             }}
-            className="text-red-600 text-center font-medium cursor-pointer md:col-span-2 mt-4 text-md md:text-lg md:mt-6 lg:mt-8"
+            className="text-red-600 bg-red-200 py-2 sm:py-3 rounded-xl text-center font-medium cursor-pointer md:col-span-2 mt-4 text-md md:text-lg md:mt-6 lg:mt-8"
           >
             Delete task
           </button>

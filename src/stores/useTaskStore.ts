@@ -16,6 +16,7 @@ interface TaskStore {
   removeTask: (index: number) => void;
   updateTask: (index: number, updatedTask: Task) => void;
   sortTasks: () => void;
+  deleteAllTasks: () => void; // New function to delete all tasks
 }
 
 const useTaskStore = create<TaskStore>()(
@@ -59,6 +60,12 @@ const useTaskStore = create<TaskStore>()(
 
             return timeA[1] - timeB[1];
           }),
+        })),
+
+      // New function to delete all tasks at once
+      deleteAllTasks: () =>
+        set(() => ({
+          tasks: [],
         })),
     }),
     {

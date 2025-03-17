@@ -4,7 +4,7 @@ import useMenuStore from './stores/useMenuStore';
 const App = () => {
   const { isMenuOpen } = useMenuStore();
   return (
-    <main className="h-[100dvh] flex items-start justify-center py-10">
+    <main className="h-[100dvh] flex items-start justify-center py-10 no-scrollbar">
       {isMenuOpen && <Menu />}
       {!isMenuOpen && <Tasks />}
 
