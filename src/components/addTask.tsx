@@ -4,7 +4,7 @@ import useMenuStore from '../stores/useMenuStore';
 
 export const AddTask = () => {
   const { toggle } = useMenuStore();
-  const addTask = useTaskStore((state) => state.addTask);
+  const { addTask } = useTaskStore();
 
   const [taskName, setTaskName] = useState('');
   const [startHour, setStartHour] = useState('');
@@ -66,8 +66,8 @@ export const AddTask = () => {
   };
 
   return (
-    <div className="flex flex-col space-y-4 border-2 rounded-md p-6 w-full shadow-md bg-white lg:p-8 lg:gap-5">
-      <h2 className="text-xl font-bold text-center lg:text-2xl">Add Task</h2>
+    <div className="flex flex-col space-y-4 border rounded-md p-6 w-full shadow-md bg-white lg:p-8 lg:gap-5 dark:bg-black dark:text-white">
+      <h2 className="text-xl font-bold text-center lg:text-2xl ">Add Task</h2>
       <form onSubmit={handleSubmit} className="space-y-4 lg:space-y-6">
         <div className="flex flex-col">
           <label htmlFor="taskName" className="font-medium mb-1">
@@ -112,7 +112,7 @@ export const AddTask = () => {
         {error && <p className="text-red-500 text-sm">{error}</p>}
         <button
           type="submit"
-          className="w-full md:py-3 bg-black hover:bg-neutral-900 text-white font-medium py-2 px-4 rounded-md transition duration-150"
+          className="w-full md:py-3 bg-black cursor-pointer text-white font-medium py-2 px-4 rounded-md transition duration-100 dark:text-black dark:bg-neutral-300"
           disabled={!!error}
         >
           Add Task

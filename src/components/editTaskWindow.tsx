@@ -28,8 +28,8 @@ export const EditTaskWindow = ({ name, startHour, endHour, index }: Props) => {
   };
 
   return (
-    <div className="font-geist bg-white absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-[65%] border-2 rounded-md w-5/6 z-20 pt-4 pb-2 px-2 lg:w-4xl lg:h-1/2">
-      <div className="flex flex-col space-y-4 p-4 h-full lg:gap-10 justify-around lg:justify-center lg:spacy">
+    <div className="font-geist bg-white absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-[65%] border rounded-md w-5/6 z-20 pt-4 pb-2 px-2 lg:w-4xl lg:h-1/2 dark:bg-black dark:text-white dark:border-neutral-300 ">
+      <div className="flex flex-col space-y-4 p-4 h-full md:gap-8 justify-around lg:justify-center lg:spacy">
         <div className="flex w-full items-center">
           <input
             id="edit"
@@ -53,23 +53,26 @@ export const EditTaskWindow = ({ name, startHour, endHour, index }: Props) => {
               id="startHour"
               value={startHourInput}
               onChange={(e) => setStartHourInput(e.target.value)}
-              className="border rounded-md px-3 py-2 sm:py-3"
+              className="border rounded-md px-3 py-2 sm:py-3 dark:border-neutral-300"
               required
             />
           </label>
-          <label htmlFor="endHour" className="flex flex-col mb-8">
+          <label
+            htmlFor="endHour"
+            className="flex flex-col mb-8 dark:border-neutral-300"
+          >
             <span className="font-medium mb-1">To:</span>
             <input
               type="time"
               id="endHour"
               value={endHourInput}
               onChange={(e) => setEndHourInput(e.target.value)}
-              className="border rounded-md px-3 py-2 sm:py-3"
+              className="border rounded-md px-3 py-2 sm:py-3 dark:border-neutral-300"
               required
             />
           </label>
           <div className="flex justify-around space-x-2 md:col-span-2">
-            <button className="text-white bg-black rounded-xl min-w-1/3 w-full py-2 sm:py-3">
+            <button className="text-white bg-black rounded-xl min-w-1/3 w-full py-2 sm:py-3 dark:bg-neutral-300 dark:text-black font-medium">
               Confirm
             </button>
             <button
@@ -77,7 +80,7 @@ export const EditTaskWindow = ({ name, startHour, endHour, index }: Props) => {
                 e.preventDefault();
                 closeEditTask();
               }}
-              className="border-2 rounded-xl min-w-1/3 w-full py-2 sm:py-3"
+              className="border rounded-xl min-w-1/3 w-full py-2 sm:py-3 dark:border-neutral-300"
             >
               Cancel
             </button>
@@ -87,13 +90,13 @@ export const EditTaskWindow = ({ name, startHour, endHour, index }: Props) => {
               e.preventDefault();
               setConfirm(true);
             }}
-            className="text-red-600 bg-red-200 py-2 sm:py-3 rounded-xl text-center font-medium cursor-pointer md:col-span-2 mt-4 text-md md:text-lg md:mt-6 lg:mt-8"
+            className="text-red-600 bg-red-200 dark:bg-red-500 dark:text-red-100  00 py-2 sm:py-3 rounded-xl text-center font-medium cursor-pointer md:col-span-2 mt-4 text-md md:text-lg md:mt-6 lg:mt-8"
           >
             Delete task
           </button>
           <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
             {confirm && (
-              <div className="flex flex-col bg-white p-6 border-2 rounded-md w-48 gap-3">
+              <div className="flex flex-col bg-white p-6 border rounded-md w-48 gap-3">
                 <h3 className="font-medium text-center">Delete {name}?</h3>
                 <div className="flex gap-3">
                   <button
@@ -111,7 +114,7 @@ export const EditTaskWindow = ({ name, startHour, endHour, index }: Props) => {
                       e.preventDefault();
                       setConfirm(false);
                     }}
-                    className="border-2 rounded-md py-2 px-5"
+                    className="border rounded-md py-2 px-5"
                   >
                     No
                   </button>

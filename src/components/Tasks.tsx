@@ -99,9 +99,9 @@ export const Tasks = () => {
 
   return (
     <>
-      <div className="relative w-5/6 h-full flex justify-center items-center align-middle">
+      <div className="relative w-5/6 h-full flex justify-center md:items-center align-middle dark:text-neutral-300">
         <div
-          className={`hidden md:block absolute left-0 top-0 h-full w-8 md:w-16 bg-gradient-to-r from-white to-transparent z-10 pointer-events-none ${
+          className={`hidden md:block absolute left-0 top-0 h-5/6 w-8 md:w-16 bg-gradient-to-r from-white dark:from-black to-transparent z-10 pointer-events-none ${
             leftFade ? 'opacity-100' : 'opacity-0'
           }`}
         ></div>
@@ -137,12 +137,12 @@ export const Tasks = () => {
           ))}
 
           {!tasks.length && (
-            <span className="text-xl text-center w-full">Add a task.</span>
+            <span className="text-xl text-center w-full">No tasks</span>
           )}
         </div>
 
         <div
-          className={`hidden md:block absolute right-0 top-0 h-full w-8 md:w-16 bg-gradient-to-l from-white to-transparent z-10 pointer-events-none ${
+          className={`hidden md:block absolute right-0 top-0 h-5/6 w-8 md:w-16 bg-gradient-to-l from-white dark:from-black to-transparent z-10 pointer-events-none ${
             rightFade && isScrollable ? 'opacity-100' : 'opacity-0'
           }`}
         ></div>

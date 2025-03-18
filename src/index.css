@@ -31,4 +31,9 @@
     scrollbar-color: black transparent;
     scrollbar-width: thin;
   }
+  .custom-scrollbar {
+    @media (prefers-color-scheme: dark) {
+      scrollbar-color: var(--color-neutral-300) transparent;
+    }
+  }
 }

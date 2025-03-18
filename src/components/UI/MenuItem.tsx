@@ -24,7 +24,7 @@ export const MenuItem = ({ tittle, icon, id }: props) => {
     <>
       <div
         onClick={() => setConfirm(true)}
-        className="flex items-center justify-between rounded-lg p-4 bg-black text-white font-geist"
+        className="flex items-center justify-between rounded-lg p-4 bg-black text-white font-geist dark:border-neutral-30 dark:border cursor-pointer"
       >
         <span>{tittle}</span>
         <div className="text-xl antialiased">{icon}</div>
