@@ -96,7 +96,7 @@ export const EditTaskWindow = ({ name, startHour, endHour, index }: Props) => {
           </button>
           <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
             {confirm && (
-              <div className="flex flex-col bg-white p-6 border rounded-md w-48 gap-3">
+              <div className="flex flex-col bg-white dark:bg-black p-6 border rounded-md w-48 gap-3">
                 <h3 className="font-medium text-center">Delete {name}?</h3>
                 <div className="flex gap-3">
                   <button
@@ -105,7 +105,7 @@ export const EditTaskWindow = ({ name, startHour, endHour, index }: Props) => {
                       removeTask(index);
                       closeEditTask();
                     }}
-                    className="bg-black rounded-md py-2 px-5 text-white"
+                    className="bg-black rounded-md py-2 px-5 text-white dark:bg-neutral-300 dark:text-black font-medium"
                   >
                     Yes
                   </button>

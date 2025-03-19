@@ -32,7 +32,7 @@ export const MenuItem = ({ tittle, icon, id }: props) => {
       {id === 'delete' && (
         <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
           {confirm && (
-            <div className="flex flex-col bg-white p-6 border-2 rounded-md w-48 gap-3 text-black">
+            <div className="flex flex-col bg-white p-6 border rounded-md w-48 gap-3 text-black dark:bg-black dark:text-white">
               <h3 className="font-medium text-center">Delete all tasks?</h3>
               <div className="flex gap-3">
                 <button
@@ -40,7 +40,7 @@ export const MenuItem = ({ tittle, icon, id }: props) => {
                     e.preventDefault();
                     handleClick();
                   }}
-                  className="bg-black rounded-md py-2 px-5 text-white"
+                  className="bg-black rounded-md py-2 px-5 text-white dark:bg-neutral-300 font-medium dark:text-black"
                 >
                   Yes
                 </button>
@@ -49,7 +49,7 @@ export const MenuItem = ({ tittle, icon, id }: props) => {
                     e.preventDefault();
                     setConfirm(false);
                   }}
-                  className="border-2 rounded-md py-2 px-5"
+                  className="border rounded-md py-2 px-5"
                 >
                   No
                 </button>
