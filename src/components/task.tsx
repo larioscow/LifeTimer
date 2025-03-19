@@ -48,7 +48,7 @@ export const TaskItem = ({
       <div
         onClick={() => handleClick(index)}
         className={clsx(
-          'capitalize border rounded-md min-w-64 w-full font-geist relative p-3 transition-all duration-150 md:h-52 md:min-w-96 snap-center',
+          'capitalize border rounded-md overflow-clip min-w-64 w-full font-geist relative p-3 transition-all duration-150 md:h-52 md:min-w-96 snap-center',
           isDone && 'opacity-50',
           !isDone && !isCurrent && 'opacity-60'
         )}
