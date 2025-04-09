@@ -1,16 +1,23 @@
 import { create } from 'zustand';
 
+type UserState = {
+  id: string;
+  username: string;
+} | null;
+
 // Definimos la interfaz para el estado del menú
 interface MenuState {
   isMenuOpen: boolean;
   isAddTaskOpen: boolean;
   isLoginOpen: boolean;
   isRegisterOpen: boolean;
+  userState: UserState | null;
   toggle: () => void;
   openAddTask: () => void;
   openLogIn: () => void;
   openRegister: () => void;
   closeAll: () => void;
+  setUserState: (user: UserState) => void;
   // toggleAddTask: () => void;
 }
 
@@ -20,6 +27,9 @@ const useMenuStore = create<MenuState>((set) => ({
   isAddTaskOpen: false,
   isLoginOpen: false,
   isRegisterOpen: false,
+  userState: null,
+  setUserState: (user: UserState) =>
+    set((state) => ({ userState: (state.userState = user) })),
   openLogIn: () =>
     set((state) => ({ isLoginOpen: (state.isLoginOpen = true) })),
   openRegister: () =>
@@ -35,6 +45,7 @@ const useMenuStore = create<MenuState>((set) => ({
       isRegisterOpen: (state.isRegisterOpen = false),
     }));
   },
+
   // toggleAddTask: () =>
   //   set((state) => ({ isAddTaskOpen: !state.isAddTaskOpen })),
 }));

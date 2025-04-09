@@ -11,6 +11,7 @@ interface TaskStore {
   editTask: boolean;
   startSchedule: string;
   endSchedule: string;
+  setTasks: (tasks: Task[]) => void;
   openEditTask: () => void;
   closeEditTask: () => void;
   addTask: (task: Task) => void;
@@ -25,6 +26,7 @@ const useTaskStore = create<TaskStore>()((set) => ({
   editTask: false,
   startSchedule: '00:00',
   endSchedule: '24:00',
+  setTasks: (tasks: Task[]) => set(() => ({ tasks })),
   openEditTask: () => set((state) => ({ editTask: (state.editTask = true) })),
 
   closeEditTask: () => set((state) => ({ editTask: (state.editTask = false) })),

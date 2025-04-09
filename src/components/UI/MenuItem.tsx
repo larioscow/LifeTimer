@@ -1,6 +1,8 @@
-import { ReactNode, useState } from 'react';
+import { useState, ReactNode } from 'react';
+import axios from 'axios';
 import useTaskStore from '../../stores/useTaskStore';
 import useMenuStore from '../../stores/useMenuStore';
+import { Confirm } from './confirm';
 
 interface props {
   tittle: string;
@@ -9,19 +11,52 @@ interface props {
 }
 
 export const MenuItem = ({ tittle, icon, id }: props) => {
-  const { deleteAllTasks } = useTaskStore();
-  const { closeAll } = useMenuStore();
   const [confirm, setConfirm] = useState(false);
+  const { deleteAllTasks, tasks, setTasks } = useTaskStore();
+  const { closeAll, setUserState } = useMenuStore();
 
-  const handleClick = () => {
-    if (id === 'delete') {
-      deleteAllTasks();
+  const deleteTasks = () => {
+    deleteAllTasks();
+    closeAll();
+  };
+
+  const logout = async () => {
+    try {
+      await axios.post('http://localhost:3000/logout', null, {
+        withCredentials: true,
+      });
+      setUserState(null);
       closeAll();
+      setTasks([]);
+    } catch (error) {
+      console.error('Error logging out:', error);
     }
   };
 
+  const save = async () => {
+    try {
+      await axios.post(
+        'http://localhost:3000/tasks',
+        { tasks: tasks },
+        { withCredentials: true }
+      );
+      closeAll();
+    } catch (error) {
+      console.error('Error saving tasks:', error);
+    }
+  };
+
+  const actions: Record<
+    string,
+    { action: () => void; message: string } | undefined
+  > = {
+    delete: { action: deleteTasks, message: 'Delete all tasks?' },
+    logout: { action: logout, message: 'Log out?' },
+    save: { action: save, message: 'Save tasks?' },
+  };
+
   return (
-    <>
+    <div>
       <div
         onClick={() => setConfirm(true)}
         className="flex items-center justify-between rounded-lg p-4 bg-black text-white font-geist dark:border-neutral-30 dark:border cursor-pointer"
@@ -29,35 +64,14 @@ export const MenuItem = ({ tittle, icon, id }: props) => {
         <span>{tittle}</span>
         <div className="text-xl antialiased">{icon}</div>
       </div>
-      {id === 'delete' && (
-        <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
-          {confirm && (
-            <div className="flex flex-col bg-white p-6 border rounded-md w-48 gap-3 text-black dark:bg-black dark:text-white">
-              <h3 className="font-medium text-center">Delete all tasks?</h3>
-              <div className="flex gap-3">
-                <button
-                  onClick={(e) => {
-                    e.preventDefault();
-                    handleClick();
-                  }}
-                  className="bg-black rounded-md py-2 px-5 text-white dark:bg-neutral-300 font-medium dark:text-black"
-                >
-                  Yes
-                </button>
-                <button
-                  onClick={(e) => {
-                    e.preventDefault();
-                    setConfirm(false);
-                  }}
-                  className="border rounded-md py-2 px-5"
-                >
-                  No
-                </button>
-              </div>
-            </div>
-          )}
-        </div>
-      )}
-    </>
+      {
+        <Confirm
+          confirm={confirm}
+          setConfirm={setConfirm}
+          action={actions[id!]?.action || (() => {})}
+          message={actions[id ?? '']?.message || ''}
+        />
+      }
+    </div>
   );
 };

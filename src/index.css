@@ -17,6 +17,10 @@
   @apply flex justify-center items-center;
 }
 
+@utility border-card {
+  @apply border rounded border-white/70;
+}
+
 @layer utilities {
   /* Hide scrollbar for Chrome, Safari and Opera */
   .no-scrollbar::-webkit-scrollbar {

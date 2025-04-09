@@ -2,11 +2,12 @@ import axios from 'axios';
 import { IoLogIn } from 'react-icons/io5';
 import { useState } from 'react';
 import useMenuStore from '../stores/useMenuStore';
+import { GoHome } from 'react-icons/go';
 
 export const Login = () => {
   const [user, setUser] = useState('');
   const [password, setPassword] = useState('');
-  const { openRegister, closeAll } = useMenuStore();
+  const { openRegister, closeAll, setUserState } = useMenuStore();
 
   const handleLogin = async () => {
     try {
@@ -18,7 +19,12 @@ export const Login = () => {
         },
         { withCredentials: true }
       );
-      console.log(res.data);
+      // if successfull
+      if (res.status === 200) {
+        console.log(res.data);
+        closeAll();
+        setUserState(res.data);
+      }
     } catch (error) {
       console.error(error);
     }
@@ -37,7 +43,7 @@ export const Login = () => {
 
   return (
     <div className="flex flex-col w-5/6 md:max-w-4xl space-y-10 items-center dark:bg-black dark:text-white">
-      <h2 className="text-3xl font-bold">Log In</h2>
+      <h2 className="text-3xl font-medium">Log In</h2>
       <form
         onSubmit={handleSubmit}
         className="flex flex-col space-y-4 w-full max-w-md"
@@ -82,6 +88,9 @@ export const Login = () => {
           Don't have an account? Register
         </span>
       </form>
+      <nav onClick={closeAll} className="cursor-pointer text-xl p-3">
+        <GoHome></GoHome>
+      </nav>
     </div>
   );
 };

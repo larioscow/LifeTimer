@@ -93,7 +93,7 @@ export const AddTask = () => {
               id="startHour"
               value={startHour}
               onChange={handleStartHourChange}
-              className="border rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-gray-900 md:py-3"
+              className="w-full border rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-gray-900 md:py-3"
               required
             />
           </label>
@@ -104,7 +104,7 @@ export const AddTask = () => {
               id="endHour"
               value={endHour}
               onChange={handleEndHourChange}
-              className="border rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-gray-900 md:py-3"
+              className="w-full border rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-gray-900 md:py-3"
               required
             />
           </label>

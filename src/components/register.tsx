@@ -1,13 +1,14 @@
 import axios from 'axios';
 import { useState } from 'react';
 import useMenuStore from '../stores/useMenuStore';
+import { GoHome } from 'react-icons/go';
 
 export const Register = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const [error, setError] = useState('');
-  const { openLogIn, closeAll } = useMenuStore();
+  const { openLogIn, closeAll, setUserState } = useMenuStore();
 
   const handleRegister = async () => {
     try {
@@ -15,7 +16,15 @@ export const Register = () => {
         username: username,
         password: password,
       });
-      console.log(res.data);
+      if (res.status === 200) {
+        //login
+        const loginRes = await axios.post('http://localhost:3000/login', {
+          username: username,
+          password: password,
+        });
+        closeAll();
+        setUserState(loginRes.data);
+      }
     } catch (error) {
       console.error(error);
     }
@@ -97,6 +106,9 @@ export const Register = () => {
           Already have an account? Login
         </span>
       </form>
+      <nav onClick={closeAll} className="cursor-pointer text-xl p-3">
+        <GoHome></GoHome>
+      </nav>
     </div>
   );
 };

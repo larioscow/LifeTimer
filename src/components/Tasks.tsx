@@ -1,19 +1,26 @@
+/* eslint-disable react-hooks/exhaustive-deps */
+import axios from 'axios';
+import clsx from 'clsx';
 import { useEffect, useRef, useState } from 'react';
+import useTaskStore from '../stores/useTaskStore';
+import { SignedInHook } from '../hooks/signedInHook';
 import { TaskItem } from './task';
 import { useTimer } from '../hooks/TimerHook';
 import { EditTaskWindow } from './editTaskWindow';
-import useTaskStore from '../stores/useTaskStore';
 import { Cover } from './UI/cover';
+import { IA } from './IA';
+import type { Task } from './task';
 
 export const Tasks = () => {
   const { within } = useTimer({});
-  const { tasks, sortTasks, editTask } = useTaskStore();
+  const { tasks, sortTasks, editTask, setTasks } = useTaskStore();
   const [editIndex, setEditIndex] = useState(-1);
   const [isSorted, setIsSorted] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
   const [leftFade, setLeftFade] = useState(false);
   const [rightFade, setRightFade] = useState(false); // Initialize as false until we check
   const [isScrollable, setIsScrollable] = useState(false);
+  const { loggedIn, checkLoginStatus } = SignedInHook();
 
   // Find the current task
   const current = tasks.findIndex((task) =>
@@ -26,6 +33,30 @@ export const Tasks = () => {
       setIsSorted(true);
     }
   }, [sortTasks, isSorted]);
+
+  useEffect(() => {
+    checkLoginStatus();
+    if (!loggedIn) return;
+    try {
+      // Fetch tasks from the server
+      const fetchTasks = async () => {
+        const response = await axios.get('http://localhost:3000/tasks', {
+          withCredentials: true,
+        });
+        if (response.data) {
+          const fetchedTasks = response.data.map((task: Task) => ({
+            name: task.name,
+            startHour: task.startHour,
+            endHour: task.endHour,
+          }));
+          setTasks(fetchedTasks);
+        }
+      };
+      fetchTasks();
+    } catch (error) {
+      console.error('Error fetching tasks:', error);
+    }
+  }, [loggedIn]);
 
   // Check if container is scrollable
   const checkScrollable = () => {
@@ -99,7 +130,7 @@ export const Tasks = () => {
 
   return (
     <>
-      <div className="relative w-5/6 h-full flex justify-center md:items-center align-middle dark:text-neutral-300 mt-16 md:m-0">
+      <div className="relative w-5/6 h-full flex justify-center items-center align-middle dark:text-neutral-300 md:m-0">
         <div
           className={`hidden md:block absolute left-0 top-0 h-5/6 w-8 md:w-16 bg-gradient-to-r from-white dark:from-black to-transparent z-10 pointer-events-none ${
             leftFade ? 'opacity-100' : 'opacity-0'
@@ -108,7 +139,10 @@ export const Tasks = () => {
 
         <div
           ref={containerRef}
-          className="custom-scrollbar h-2/4 md:px-6 w-full flex flex-col items-center space-y-2.5 md:space-x-2.5 md:space-y-0 md:flex-row md:overflow-x-scroll scroll-smooth snap-x"
+          className={clsx(
+            'custom-scrollbar h-2/4 md:px-6 w-full flex flex-col items-center justify-center space-y-2.5 md:space-x-2.5 md:space-y-0 md:flex-row scroll-smooth snap-x',
+            isScrollable && 'md:overflow-x-scroll'
+          )}
           onScroll={() => {
             if (containerRef.current) {
               const container = containerRef.current;
@@ -136,11 +170,7 @@ export const Tasks = () => {
             />
           ))}
 
-          {!tasks.length && (
-            <span className="text-xl text-center w-full absolute">
-              Add a task
-            </span>
-          )}
+          {!tasks.length && <IA />}
         </div>
 
         <div
