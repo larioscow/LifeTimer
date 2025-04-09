@@ -22,7 +22,7 @@ export const MenuItem = ({ tittle, icon, id }: props) => {
 
   const logout = async () => {
     try {
-      await axios.post('http://localhost:3000/logout', null, {
+      await axios.post('https://lifetimer.larioscow.dev/logout', null, {
         withCredentials: true,
       });
       setUserState(null);
@@ -36,7 +36,7 @@ export const MenuItem = ({ tittle, icon, id }: props) => {
   const save = async () => {
     try {
       await axios.post(
-        'http://localhost:3000/tasks',
+        'https://lifetimer.larioscow.dev/tasks',
         { tasks: tasks },
         { withCredentials: true }
       );

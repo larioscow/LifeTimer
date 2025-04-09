@@ -40,9 +40,12 @@ export const Tasks = () => {
     try {
       // Fetch tasks from the server
       const fetchTasks = async () => {
-        const response = await axios.get('http://localhost:3000/tasks', {
-          withCredentials: true,
-        });
+        const response = await axios.get(
+          'https://lifetimer.larioscow.dev/tasks',
+          {
+            withCredentials: true,
+          }
+        );
         if (response.data) {
           const fetchedTasks = response.data.map((task: Task) => ({
             name: task.name,
