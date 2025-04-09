@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import axios, { AxiosError } from 'axios';
+import { AxiosError } from 'axios';
 import useMenuStore from '../stores/useMenuStore';
 
 export const Register = () => {
@@ -27,7 +27,7 @@ export const Register = () => {
     }
 
     try {
-      const response = await axios.post('/register', { username, password });
+      // const response = await axios.post('/register', { username, password });
 
       setSuccess('Registration successful! You can now log in.');
       setUsername('');
