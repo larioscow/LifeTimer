@@ -1,3 +1,4 @@
+import axios from 'axios';
 import { IoLogIn } from 'react-icons/io5';
 import { useState } from 'react';
 import useMenuStore from '../stores/useMenuStore';
@@ -7,13 +8,28 @@ export const Login = () => {
   const [password, setPassword] = useState('');
   const { openRegister, closeAll } = useMenuStore();
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    console.log('User:', user, 'Password:', password);
-    // Add your login logic here
+  const handleLogin = async () => {
+    try {
+      const res = await axios.post(
+        'http://localhost:3000/login',
+        {
+          username: user,
+          password: password,
+        },
+        { withCredentials: true }
+      );
+      console.log(res.data);
+    } catch (error) {
+      console.error(error);
+    }
   };
 
-  const handleRegister = (e: React.MouseEvent) => {
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    handleLogin();
+  };
+
+  const goRegister = (e: React.MouseEvent) => {
     e.preventDefault();
     closeAll();
     openRegister();
@@ -60,7 +76,7 @@ export const Login = () => {
           <span>Log In</span>
         </button>
         <span
-          onClick={handleRegister}
+          onClick={goRegister}
           className="text-neutral-500 font-medium hover:underline hover:text-neutral-400 cursor-pointer"
         >
           Don't have an account? Register

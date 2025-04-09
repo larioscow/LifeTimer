@@ -10,7 +10,7 @@ interface props {
 
 export const MenuItem = ({ tittle, icon, id }: props) => {
   const { deleteAllTasks } = useTaskStore();
-  const { closeAll, openLogIn } = useMenuStore();
+  const { closeAll } = useMenuStore();
   const [confirm, setConfirm] = useState(false);
 
   const handleClick = () => {
@@ -18,16 +18,12 @@ export const MenuItem = ({ tittle, icon, id }: props) => {
       deleteAllTasks();
       closeAll();
     }
-    if (id === 'login') {
-      closeAll();
-      openLogIn();
-    }
   };
 
   return (
     <>
       <div
-        onClick={() => (id === 'login' ? handleClick() : setConfirm(true))}
+        onClick={() => setConfirm(true)}
         className="flex items-center justify-between rounded-lg p-4 bg-black text-white font-geist dark:border-neutral-30 dark:border cursor-pointer"
       >
         <span>{tittle}</span>

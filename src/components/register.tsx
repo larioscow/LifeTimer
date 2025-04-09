@@ -1,5 +1,5 @@
+import axios from 'axios';
 import { useState } from 'react';
-import { AxiosError } from 'axios';
 import useMenuStore from '../stores/useMenuStore';
 
 export const Register = () => {
@@ -7,47 +7,31 @@ export const Register = () => {
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const [error, setError] = useState('');
-  const [success, setSuccess] = useState('');
   const { openLogIn, closeAll } = useMenuStore();
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-
-    setError('');
-    setSuccess('');
-
-    if (!username || !password || !confirmPassword) {
-      setError('Please fill in all fields');
-      return;
+  const handleRegister = async () => {
+    try {
+      const res = await axios.post('http://localhost:3000/register', {
+        username: username,
+        password: password,
+      });
+      console.log(res.data);
+    } catch (error) {
+      console.error(error);
     }
+  };
 
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
     if (password !== confirmPassword) {
       setError('Passwords do not match');
       return;
     }
-
-    try {
-      // const response = await axios.post('/register', { username, password });
-
-      setSuccess('Registration successful! You can now log in.');
-      setUsername('');
-      setPassword('');
-      setConfirmPassword('');
-    } catch (err) {
-      const axiosError = err as AxiosError;
-      if (axiosError.response) {
-        setError(
-          typeof axiosError.response.data === 'string'
-            ? axiosError.response.data
-            : 'Registration failed. Please try again.'
-        );
-      } else {
-        setError('An error occurred during registration');
-      }
-    }
+    setError('');
+    handleRegister();
   };
 
-  const handleLogin = (e: React.MouseEvent) => {
+  const goLogIn = (e: React.MouseEvent) => {
     e.preventDefault();
     closeAll();
     openLogIn();
@@ -73,7 +57,6 @@ export const Register = () => {
             required
           />
         </div>
-
         <div className="flex flex-col">
           <label htmlFor="password" className="text-lg font-medium">
             Password
@@ -87,7 +70,6 @@ export const Register = () => {
             required
           />
         </div>
-
         <div className="flex flex-col">
           <label htmlFor="confirmPassword" className="text-lg font-medium">
             Confirm Password
@@ -101,21 +83,15 @@ export const Register = () => {
             required
           />
         </div>
-
         {error && <p className="text-red-500 text-sm font-medium">{error}</p>}
-        {success && (
-          <p className="text-green-500 text-sm font-medium">{success}</p>
-        )}
-
         <button
           type="submit"
-          className="flex items-center justify-center p-3 font-medium bg-white text-black rounded-md cursor-pointer hover:bg-gray-100 transition"
+          className="flex items-center justify-center space-x-2 p-3 font-medium bg-white text-black rounded-md cursor-pointer"
         >
-          Register
+          <span>Register</span>
         </button>
-
         <span
-          onClick={handleLogin}
+          onClick={goLogIn}
           className="text-neutral-500 font-medium hover:underline hover:text-neutral-400 cursor-pointer"
         >
           Already have an account? Login

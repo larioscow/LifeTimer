@@ -99,7 +99,7 @@ export const Tasks = () => {
 
   return (
     <>
-      <div className="relative w-5/6 h-full flex justify-center md:items-center align-middle dark:text-neutral-300">
+      <div className="relative w-5/6 h-full flex justify-center md:items-center align-middle dark:text-neutral-300 mt-16 md:m-0">
         <div
           className={`hidden md:block absolute left-0 top-0 h-5/6 w-8 md:w-16 bg-gradient-to-r from-white dark:from-black to-transparent z-10 pointer-events-none ${
             leftFade ? 'opacity-100' : 'opacity-0'
@@ -137,7 +137,9 @@ export const Tasks = () => {
           ))}
 
           {!tasks.length && (
-            <span className="text-xl text-center w-full">No tasks</span>
+            <span className="text-xl text-center w-full absolute">
+              Add a task
+            </span>
           )}
         </div>
 

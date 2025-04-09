@@ -4,6 +4,7 @@ export { Timer } from './timer';
 export { Menu } from './menu';
 export { AddTask } from './addTask';
 export { Login } from './login';
+export { Header } from './header';
 
 export { Progress } from './UI/progress';
 export { MenuItem } from './UI/MenuItem';
