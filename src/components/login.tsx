@@ -12,7 +12,7 @@ export const Login = () => {
   const handleLogin = async () => {
     try {
       const res = await axios.post(
-        'https://lifetimer.larioscow.devlogin',
+        'http://localhost:3000/login',
         {
           username: user,
           password: password,
