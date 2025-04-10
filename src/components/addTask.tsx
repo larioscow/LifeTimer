@@ -1,10 +1,11 @@
+import axios from 'axios';
 import { useState, useEffect, ChangeEvent, FormEvent } from 'react';
 import useTaskStore from '../stores/useTaskStore';
 import useMenuStore from '../stores/useMenuStore';
 
 export const AddTask = () => {
   const { toggle } = useMenuStore();
-  const { addTask } = useTaskStore();
+  const { addTask, tasks } = useTaskStore();
 
   const [taskName, setTaskName] = useState('');
   const [startHour, setStartHour] = useState('');
@@ -48,11 +49,20 @@ export const AddTask = () => {
     }
   };
 
-  const handleSubmit = (e: FormEvent) => {
+  const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
     if (error) return;
 
     addTask({ name: taskName, startHour, endHour });
+    try {
+      await axios.post(
+        'http://localhost:3000/tasks',
+        { tasks: tasks },
+        { withCredentials: true }
+      );
+    } catch (error) {
+      console.error('Error saving tasks:', error);
+    }
     setTaskName('');
 
     const currentTime = new Date();
