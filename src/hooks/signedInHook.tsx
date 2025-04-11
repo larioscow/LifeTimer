@@ -7,9 +7,12 @@ export const SignedInHook = () => {
 
   const checkLoginStatus = async () => {
     try {
-      const res = await axios.get('http://localhost:3000/protected', {
-        withCredentials: true,
-      });
+      const res = await axios.get(
+        'https://life-timer-api.larioscow.dev/protected',
+        {
+          withCredentials: true,
+        }
+      );
       if (res.data) {
         setLoggedIn(true);
         setUser(res.data.user.username);

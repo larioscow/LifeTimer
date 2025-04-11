@@ -56,7 +56,7 @@ export const AddTask = () => {
     addTask({ name: taskName, startHour, endHour });
     try {
       await axios.post(
-        'http://localhost:3000/tasks',
+        `https://life-timer-api.larioscow.dev/tasks`,
         { tasks: tasks },
         { withCredentials: true }
       );
