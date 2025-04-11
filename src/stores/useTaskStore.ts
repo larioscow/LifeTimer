@@ -1,4 +1,5 @@
 import { create } from 'zustand';
+import axios from 'axios';
 
 interface Task {
   name: string;
@@ -14,57 +15,100 @@ interface TaskStore {
   setTasks: (tasks: Task[]) => void;
   openEditTask: () => void;
   closeEditTask: () => void;
-  addTask: (task: Task) => void;
-  removeTask: (index: number) => void;
-  updateTask: (index: number, updatedTask: Task) => void;
+  addTask: (task: Task) => Promise<void>;
+  removeTask: (index: number) => Promise<void>;
+  updateTask: (index: number, updatedTask: Task) => Promise<void>;
   sortTasks: () => void;
-  deleteAllTasks: () => void; // New function to delete all tasks
+  deleteAllTasks: () => Promise<void>;
+  fetchTasks: () => Promise<void>;
 }
 
-const useTaskStore = create<TaskStore>()((set) => ({
+const useTaskStore = create<TaskStore>()((set, get) => ({
   tasks: [],
   editTask: false,
   startSchedule: '00:00',
   endSchedule: '24:00',
+
   setTasks: (tasks: Task[]) => set(() => ({ tasks })),
-  openEditTask: () => set((state) => ({ editTask: (state.editTask = true) })),
 
-  closeEditTask: () => set((state) => ({ editTask: (state.editTask = false) })),
+  openEditTask: () => set(() => ({ editTask: true })),
+  closeEditTask: () => set(() => ({ editTask: false })),
 
-  addTask: (task: Task) =>
-    set((state) => ({
-      tasks: [...state.tasks, task],
-    })),
+  addTask: async (task: Task) => {
+    const newTasks = [...get().tasks, task];
+    set({ tasks: newTasks });
+    await axios.post(
+      'https://lifetimer.larioscow.dev/tasks',
+      { tasks: newTasks },
+      { withCredentials: true }
+    );
+  },
 
-  removeTask: (index: number) =>
-    set((state) => ({
-      tasks: state.tasks.filter((_, i) => i !== index),
-    })),
+  removeTask: async (index: number) => {
+    const newTasks = get().tasks.filter((_, i) => i !== index);
+    set({ tasks: newTasks });
+    await axios.post(
+      'https://lifetimer.larioscow.dev/tasks',
+      { tasks: newTasks },
+      { withCredentials: true }
+    );
+  },
 
-  updateTask: (index: number, updatedTask: Task) =>
-    set((state) => ({
-      tasks: state.tasks.map((task, i) => (i === index ? updatedTask : task)),
-    })),
+  updateTask: async (index: number, updatedTask: Task) => {
+    const newTasks = get().tasks.map((task, i) =>
+      i === index ? updatedTask : task
+    );
+    set({ tasks: newTasks });
+    await axios.post(
+      'https://lifetimer.larioscow.dev/tasks',
+      { tasks: newTasks },
+      { withCredentials: true }
+    );
+  },
 
-  sortTasks: () =>
-    set((state) => ({
-      tasks: [...state.tasks].sort((a, b) => {
-        const timeA = a.startHour.split(':').map(Number);
-        const timeB = b.startHour.split(':').map(Number);
+  sortTasks: async () => {
+    const sortedTasks = [...get().tasks].sort((a, b) => {
+      const [ah, am] = a.startHour.split(':').map(Number);
+      const [bh, bm] = b.startHour.split(':').map(Number);
+      return ah !== bh ? ah - bh : am - bm;
+    });
 
-        if (timeA[0] !== timeB[0]) {
-          return timeA[0] - timeB[0];
-        }
+    try {
+      await axios.post(
+        'https://lifetimer.larioscow.dev/tasks',
+        { tasks: sortedTasks },
+        { withCredentials: true }
+      );
+      set({ tasks: sortedTasks });
+    } catch (error) {
+      console.error('Error saving sorted tasks to server:', error);
+    }
+  },
 
-        return timeA[1] - timeB[1];
-      }),
-    })),
+  deleteAllTasks: async () => {
+    try {
+      await axios.post(
+        'https://lifetimer.larioscow.dev/tasks',
+        { tasks: [] },
+        { withCredentials: true }
+      );
+      set({ tasks: [] }); // Solo si el servidor responde correctamente
+    } catch (error) {
+      console.error('Error deleting tasks:', error);
+    }
+  },
 
-  // New function to delete all tasks at once
-  deleteAllTasks: () =>
-    set(() => ({
-      tasks: [],
-    })),
+  fetchTasks: async () => {
+    const res = await axios.get('https://lifetimer.larioscow.dev/tasks', {
+      withCredentials: true,
+    });
+    const parsedTasks = res.data.map((task: Task) => ({
+      name: task.name,
+      startHour: task.startHour,
+      endHour: task.endHour,
+    }));
+    set({ tasks: parsedTasks });
+  },
 }));
 
 export default useTaskStore;

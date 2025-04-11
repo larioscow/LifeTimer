@@ -12,17 +12,17 @@ interface props {
 
 export const MenuItem = ({ tittle, icon, id }: props) => {
   const [confirm, setConfirm] = useState(false);
-  const { deleteAllTasks, tasks, setTasks } = useTaskStore();
+  const { deleteAllTasks, setTasks } = useTaskStore();
   const { closeAll, setUserState } = useMenuStore();
 
-  const deleteTasks = () => {
-    deleteAllTasks();
+  const deleteTasks = async () => {
+    await deleteAllTasks();
     closeAll();
   };
 
   const logout = async () => {
     try {
-      await axios.post('https://life-timer-api.larioscow.dev/logout', null, {
+      await axios.post('https://lifetimer.larioscow.dev/logout', null, {
         withCredentials: true,
       });
       setUserState(null);
@@ -33,18 +33,18 @@ export const MenuItem = ({ tittle, icon, id }: props) => {
     }
   };
 
-  const save = async () => {
-    try {
-      await axios.post(
-        'https://life-timer-api.larioscow.dev/tasks',
-        { tasks: tasks },
-        { withCredentials: true }
-      );
-      closeAll();
-    } catch (error) {
-      console.error('Error saving tasks:', error);
-    }
-  };
+  // const save = async () => {
+  //   try {
+  //     await axios.post(
+  //       'https://lifetimer.larioscow.dev/tasks',
+  //       { tasks: tasks },
+  //       { withCredentials: true }
+  //     );
+  //     closeAll();
+  //   } catch (error) {
+  //     console.error('Error saving tasks:', error);
+  //   }
+  // };
 
   const actions: Record<
     string,
@@ -52,7 +52,7 @@ export const MenuItem = ({ tittle, icon, id }: props) => {
   > = {
     delete: { action: deleteTasks, message: 'Delete all tasks?' },
     logout: { action: logout, message: 'Log out?' },
-    save: { action: save, message: 'Save tasks?' },
+    // save: { action: save, message: 'Save tasks?' },
   };
 
   return (

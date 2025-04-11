@@ -1,4 +1,3 @@
-import axios from 'axios';
 import { useState, useEffect, ChangeEvent, FormEvent } from 'react';
 import useTaskStore from '../stores/useTaskStore';
 import useMenuStore from '../stores/useMenuStore';
@@ -53,16 +52,8 @@ export const AddTask = () => {
     e.preventDefault();
     if (error) return;
 
-    addTask({ name: taskName, startHour, endHour });
-    try {
-      await axios.post(
-        `https://life-timer-api.larioscow.dev/tasks`,
-        { tasks: tasks },
-        { withCredentials: true }
-      );
-    } catch (error) {
-      console.error('Error saving tasks:', error);
-    }
+    await addTask({ name: taskName, startHour, endHour });
+
     setTaskName('');
 
     const currentTime = new Date();
@@ -73,6 +64,7 @@ export const AddTask = () => {
       .padStart(2, '0');
     setStartHour(`${formattedHour}:${formattedMinute}`);
     toggle();
+    console.log(tasks);
   };
 
   return (

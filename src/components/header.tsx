@@ -29,9 +29,6 @@ export const Header = () => {
     if (userState) {
       setLoggedIn(true);
       setUser(userState.username);
-    } else {
-      setLoggedIn(false);
-      setUser('');
     }
   }, [userState, setLoggedIn, setUser]);
 

@@ -1,7 +1,7 @@
 import { MenuItem } from './UI/MenuItem';
 // import { IoAnalytics } from 'react-icons/io5';
 // import { IoPencil } from 'react-icons/io5';
-import { IoLogOut, IoSave, IoTrash } from 'react-icons/io5';
+import { IoLogOut, IoTrash } from 'react-icons/io5';
 import { ReactNode } from 'react';
 import { AddTask } from './addTask';
 
@@ -18,7 +18,7 @@ const options: options = [
   // { tittle: 'Edit schedule', icon: <IoPencil /> },
   // { tittle: 'Metrics', icon: <IoAnalytics /> },
   { tittle: 'Delete all tasks', icon: <IoTrash />, id: 'delete' },
-  { tittle: 'Save tasks', icon: <IoSave />, id: 'save' },
+  // { tittle: 'Save tasks', icon: <IoSave />, id: 'save' },
   { tittle: 'Log Out', icon: <IoLogOut />, id: 'logout' },
 ];
 

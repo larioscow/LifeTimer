@@ -1,5 +1,4 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import axios from 'axios';
 import clsx from 'clsx';
 import { useEffect, useRef, useState } from 'react';
 import useTaskStore from '../stores/useTaskStore';
@@ -9,13 +8,11 @@ import { useTimer } from '../hooks/TimerHook';
 import { EditTaskWindow } from './editTaskWindow';
 import { Cover } from './UI/cover';
 import { IA } from './IA';
-import type { Task } from './task';
 
 export const Tasks = () => {
   const { within } = useTimer({});
-  const { tasks, sortTasks, editTask, setTasks } = useTaskStore();
+  const { tasks, sortTasks, editTask, fetchTasks } = useTaskStore();
   const [editIndex, setEditIndex] = useState(-1);
-  const [isSorted, setIsSorted] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
   const [leftFade, setLeftFade] = useState(false);
   const [rightFade, setRightFade] = useState(false); // Initialize as false until we check
@@ -28,37 +25,19 @@ export const Tasks = () => {
   );
 
   useEffect(() => {
-    if (!isSorted) {
-      sortTasks();
-      setIsSorted(true);
-    }
-  }, [sortTasks, isSorted]);
+    const check = async () => {
+      await checkLoginStatus();
+    };
+    check();
+  }, []);
 
   useEffect(() => {
-    checkLoginStatus();
     if (!loggedIn) return;
-    try {
-      // Fetch tasks from the server
-      const fetchTasks = async () => {
-        const response = await axios.get(
-          'https://life-timer-api.larioscow.dev/tasks',
-          {
-            withCredentials: true,
-          }
-        );
-        if (response.data) {
-          const fetchedTasks = response.data.map((task: Task) => ({
-            name: task.name,
-            startHour: task.startHour,
-            endHour: task.endHour,
-          }));
-          setTasks(fetchedTasks);
-        }
-      };
-      fetchTasks();
-    } catch (error) {
-      console.error('Error fetching tasks:', error);
-    }
+    const check = async () => {
+      await fetchTasks();
+      await sortTasks();
+    };
+    check();
   }, [loggedIn]);
 
   // Check if container is scrollable
@@ -86,7 +65,7 @@ export const Tasks = () => {
 
       const containerWidth = container.scrollWidth ?? 0;
       const elements = container.childNodes.length ?? 1;
-      const scrollPosition = (current / elements) * containerWidth;
+      const scrollPosition = ((current - 1) / elements) * containerWidth;
 
       container.scrollTo({
         left: scrollPosition,
@@ -143,7 +122,7 @@ export const Tasks = () => {
         <div
           ref={containerRef}
           className={clsx(
-            'custom-scrollbar h-2/4 md:px-6 w-full flex flex-col items-center justify-center space-y-2.5 md:space-x-2.5 md:space-y-0 md:flex-row scroll-smooth snap-x',
+            'custom-scrollbar h-2/4 md:px-6 w-full flex flex-col items-center space-y-2.5 md:space-x-2.5 md:space-y-0 md:flex-row scroll-smooth snap-x',
             isScrollable && 'md:overflow-x-scroll'
           )}
           onScroll={() => {

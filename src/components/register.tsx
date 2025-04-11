@@ -12,17 +12,14 @@ export const Register = () => {
 
   const handleRegister = async () => {
     try {
-      const res = await axios.post(
-        'https://life-timer-api.larioscow.dev/register',
-        {
-          username: username,
-          password: password,
-        }
-      );
+      const res = await axios.post('https://lifetimer.larioscow.dev/register', {
+        username: username,
+        password: password,
+      });
       if (res.status === 200) {
         //login
         const loginRes = await axios.post(
-          'https://life-timer-api.larioscow.dev/login',
+          'https://lifetimer.larioscow.dev/login',
           {
             username: username,
             password: password,

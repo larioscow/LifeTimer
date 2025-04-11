@@ -16,14 +16,14 @@ export const EditTaskWindow = ({ name, startHour, endHour, index }: Props) => {
   const [startHourInput, setStartHourInput] = useState(startHour);
   const [endHourInput, setEndHourInput] = useState(endHour);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    updateTask(index, {
+    await updateTask(index, {
       name: taskInput,
       startHour: startHourInput,
       endHour: endHourInput,
     });
-    sortTasks();
+    await sortTasks();
     closeEditTask();
   };
 
