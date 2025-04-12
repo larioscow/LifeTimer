@@ -10,7 +10,7 @@ const App = () => {
     register: [isRegisterOpen, <Register />],
   };
   return (
-    <main className="h-[100dvh] flex justify-center py-10 no-scrollbar dark:bg-black">
+    <main className="min-h-[100dvh] flex justify-center py-10 no-scrollbar dark:bg-black">
       <Header />
       {concordance.menu[0] && concordance.menu[1]}
       {concordance.login[0] && concordance.login[1]}
