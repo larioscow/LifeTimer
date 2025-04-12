@@ -26,9 +26,14 @@ export const Header = () => {
   }, [checkLoginStatus]);
 
   useEffect(() => {
+    console.log(userState);
     if (userState) {
       setLoggedIn(true);
       setUser(userState.username);
+    }
+    if (userState === null) {
+      setLoggedIn(false);
+      setUser('');
     }
   }, [userState, setLoggedIn, setUser]);
 

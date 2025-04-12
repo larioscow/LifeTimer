@@ -38,7 +38,7 @@ const useTaskStore = create<TaskStore>()((set, get) => ({
     const newTasks = [...get().tasks, task];
     set({ tasks: newTasks });
     await axios.post(
-      'https://life-timer-api.larioscow.dev/tasks',
+      'http://localhost:3000/tasks',
       { tasks: newTasks },
       { withCredentials: true }
     );
@@ -48,7 +48,7 @@ const useTaskStore = create<TaskStore>()((set, get) => ({
     const newTasks = get().tasks.filter((_, i) => i !== index);
     set({ tasks: newTasks });
     await axios.post(
-      'https://life-timer-api.larioscow.dev/tasks',
+      'http://localhost:3000/tasks',
       { tasks: newTasks },
       { withCredentials: true }
     );
@@ -60,7 +60,7 @@ const useTaskStore = create<TaskStore>()((set, get) => ({
     );
     set({ tasks: newTasks });
     await axios.post(
-      'https://life-timer-api.larioscow.dev/tasks',
+      'http://localhost:3000/tasks',
       { tasks: newTasks },
       { withCredentials: true }
     );
@@ -75,7 +75,7 @@ const useTaskStore = create<TaskStore>()((set, get) => ({
 
     try {
       await axios.post(
-        'https://life-timer-api.larioscow.dev/tasks',
+        'http://localhost:3000/tasks',
         { tasks: sortedTasks },
         { withCredentials: true }
       );
@@ -88,7 +88,7 @@ const useTaskStore = create<TaskStore>()((set, get) => ({
   deleteAllTasks: async () => {
     try {
       await axios.post(
-        'https://life-timer-api.larioscow.dev/tasks',
+        'http://localhost:3000/tasks',
         { tasks: [] },
         { withCredentials: true }
       );
@@ -99,7 +99,7 @@ const useTaskStore = create<TaskStore>()((set, get) => ({
   },
 
   fetchTasks: async () => {
-    const res = await axios.get('https://life-timer-api.larioscow.dev/tasks', {
+    const res = await axios.get('http://localhost:3000/tasks', {
       withCredentials: true,
     });
     const parsedTasks = res.data.map((task: Task) => ({
