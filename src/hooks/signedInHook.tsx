@@ -8,9 +8,12 @@ export const SignedInHook = () => {
   const checkLoginStatus = async () => {
     if (user === null) return;
     try {
-      const res = await axios.get('https://lifetimer.larioscow.dev/protected', {
-        withCredentials: true,
-      });
+      const res = await axios.get(
+        'https://life-timer-api.larioscow.dev/protected',
+        {
+          withCredentials: true,
+        }
+      );
       if (res.data) {
         setLoggedIn(true);
         setUser(res.data.user.username);
