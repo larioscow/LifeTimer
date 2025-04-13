@@ -113,7 +113,7 @@ export const Tasks = () => {
     <>
       {tasks.length && (
         <>
-          <div className="relative w-5/6 h-full flex justify-center items-start mt-80 md:mt-0 md:items-center align-middle dark:text-neutral-300">
+          <div className="relative w-5/6 h-full flex justify-center items-center align-middle dark:text-neutral-300">
             <div
               className={`hidden md:block absolute left-0 top-0 h-5/6 w-8 md:w-16 bg-gradient-to-r from-white dark:from-black to-transparent z-10 pointer-events-none ${
                 leftFade ? 'opacity-100' : 'opacity-0'
@@ -123,7 +123,7 @@ export const Tasks = () => {
             <div
               ref={containerRef}
               className={clsx(
-                'custom-scrollbar h-2/4 md:px-6 w-full flex flex-col items-center space-y-2.5 md:space-x-2.5 md:space-y-0 md:flex-row scroll-smooth snap-x',
+                'custom-scrollbar overflow-y-scroll max-h-[75dvh] md:h-2/4 md:px-6 w-full flex flex-col items-center space-y-2.5 md:space-x-2.5 md:space-y-0 md:flex-row scroll-smooth snap-x',
                 isScrollable && 'md:overflow-x-scroll'
               )}
               onScroll={() => {

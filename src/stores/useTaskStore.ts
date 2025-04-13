@@ -24,7 +24,68 @@ interface TaskStore {
 }
 
 const useTaskStore = create<TaskStore>()((set, get) => ({
-  tasks: [],
+  tasks: [
+    {
+      name: 'Morning Routine',
+      startHour: '07:00',
+      endHour: '07:15',
+    },
+    {
+      name: 'Exercise',
+      startHour: '07:15',
+      endHour: '08:30',
+    },
+    {
+      name: 'PAA',
+      startHour: '08:30',
+      endHour: '11:00',
+    },
+    {
+      name: 'Breakfast',
+      startHour: '11:00',
+      endHour: '11:30',
+    },
+    {
+      name: 'SIGMA',
+      startHour: '11:30',
+      endHour: '15:00',
+    },
+    {
+      name: 'Projects',
+      startHour: '15:00',
+      endHour: '21:00',
+    },
+    {
+      name: 'Morning Routine',
+      startHour: '07:00',
+      endHour: '07:15',
+    },
+    {
+      name: 'Exercise',
+      startHour: '07:15',
+      endHour: '08:30',
+    },
+    {
+      name: 'PAA',
+      startHour: '08:30',
+      endHour: '11:00',
+    },
+    {
+      name: 'Breakfast',
+      startHour: '11:00',
+      endHour: '11:30',
+    },
+    {
+      name: 'SIGMA',
+      startHour: '11:30',
+      endHour: '15:00',
+    },
+    {
+      name: 'Projects',
+      startHour: '15:00',
+      endHour: '21:00',
+    },
+  ],
   editTask: false,
   startSchedule: '00:00',
   endSchedule: '24:00',
