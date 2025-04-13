@@ -7,7 +7,6 @@ import { TaskItem } from './task';
 import { useTimer } from '../hooks/TimerHook';
 import { EditTaskWindow } from './editTaskWindow';
 import { Cover } from './UI/cover';
-import { IA } from './IA';
 
 export const Tasks = () => {
   const { within } = useTimer({});
@@ -112,70 +111,72 @@ export const Tasks = () => {
 
   return (
     <>
-      <div className="relative w-5/6 h-full flex justify-center items-center align-middle dark:text-neutral-300 md:m-0">
-        <div
-          className={`hidden md:block absolute left-0 top-0 h-5/6 w-8 md:w-16 bg-gradient-to-r from-white dark:from-black to-transparent z-10 pointer-events-none ${
-            leftFade ? 'opacity-100' : 'opacity-0'
-          }`}
-        ></div>
+      {tasks.length && (
+        <>
+          <div className="relative w-5/6 h-full flex justify-center items-center align-middle dark:text-neutral-300 md:m-0">
+            <div
+              className={`hidden md:block absolute left-0 top-0 h-5/6 w-8 md:w-16 bg-gradient-to-r from-white dark:from-black to-transparent z-10 pointer-events-none ${
+                leftFade ? 'opacity-100' : 'opacity-0'
+              }`}
+            ></div>
 
-        <div
-          ref={containerRef}
-          className={clsx(
-            'custom-scrollbar h-2/4 md:px-6 w-full flex flex-col items-center space-y-2.5 md:space-x-2.5 md:space-y-0 md:flex-row scroll-smooth snap-x',
-            isScrollable && 'md:overflow-x-scroll'
-          )}
-          onScroll={() => {
-            if (containerRef.current) {
-              const container = containerRef.current;
-              setLeftFade(container.scrollLeft > 0);
+            <div
+              ref={containerRef}
+              className={clsx(
+                'custom-scrollbar h-2/4 md:px-6 w-full flex flex-col items-center space-y-2.5 md:space-x-2.5 md:space-y-0 md:flex-row scroll-smooth snap-x',
+                isScrollable && 'md:overflow-x-scroll'
+              )}
+              onScroll={() => {
+                if (containerRef.current) {
+                  const container = containerRef.current;
+                  setLeftFade(container.scrollLeft > 0);
 
-              // Only show right fade if content is wider than container
-              // and we're not at the right edge
-              const hasMoreContent =
-                container.scrollWidth > container.clientWidth;
-              const isAtRightEdge =
-                container.scrollLeft + container.clientWidth >=
-                container.scrollWidth - 5;
-              setRightFade(hasMoreContent && !isAtRightEdge);
-            }
-          }}
-        >
-          {tasks.map((task, index) => (
-            <TaskItem
-              key={index}
-              name={task.name}
-              startHour={task.startHour}
-              endHour={task.endHour}
-              index={index}
-              setEditIndex={setEditIndex}
-            />
-          ))}
-
-          {!tasks.length && <IA />}
-        </div>
-
-        <div
-          className={`hidden md:block absolute right-0 top-0 h-5/6 w-8 md:w-16 bg-gradient-to-l from-white dark:from-black to-transparent z-10 pointer-events-none ${
-            rightFade && isScrollable ? 'opacity-100' : 'opacity-0'
-          }`}
-        ></div>
-      </div>
-
-      {editTask &&
-        tasks
-          .filter((_, index) => index === editIndex)
-          .map((task, key) => (
-            <div key={key}>
-              <EditTaskWindow
-                name={task.name}
-                startHour={task.startHour}
-                endHour={task.endHour}
-                index={editIndex}
-              />
-              <Cover />
+                  // Only show right fade if content is wider than container
+                  // and we're not at the right edge
+                  const hasMoreContent =
+                    container.scrollWidth > container.clientWidth;
+                  const isAtRightEdge =
+                    container.scrollLeft + container.clientWidth >=
+                    container.scrollWidth - 5;
+                  setRightFade(hasMoreContent && !isAtRightEdge);
+                }
+              }}
+            >
+              {tasks.map((task, index) => (
+                <TaskItem
+                  key={index}
+                  name={task.name}
+                  startHour={task.startHour}
+                  endHour={task.endHour}
+                  index={index}
+                  setEditIndex={setEditIndex}
+                />
+              ))}
             </div>
-          ))}
+
+            <div
+              className={`hidden md:block absolute right-0 top-0 h-5/6 w-8 md:w-16 bg-gradient-to-l from-white dark:from-black to-transparent z-10 pointer-events-none ${
+                rightFade && isScrollable ? 'opacity-100' : 'opacity-0'
+              }`}
+            ></div>
+          </div>
+
+          {editTask &&
+            tasks
+              .filter((_, index) => index === editIndex)
+              .map((task, key) => (
+                <div key={key}>
+                  <EditTaskWindow
+                    name={task.name}
+                    startHour={task.startHour}
+                    endHour={task.endHour}
+                    index={editIndex}
+                  />
+                  <Cover />
+                </div>
+              ))}
+        </>
+      )}
     </>
   );
 };
