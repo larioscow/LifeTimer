@@ -37,11 +37,16 @@ const useTaskStore = create<TaskStore>()((set, get) => ({
   addTask: async (task: Task) => {
     const newTasks = [...get().tasks, task];
     set({ tasks: newTasks });
-    await axios.post(
-      'https://life-timer-api.larioscow.dev/tasks',
-      { tasks: newTasks },
-      { withCredentials: true }
-    );
+    try {
+      await axios.post(
+        'https://life-timer-api.larioscow.dev/tasks',
+        { tasks: newTasks },
+        { withCredentials: true }
+      );
+      console.log('added: ', task);
+    } catch (error) {
+      console.error(error);
+    }
   },
 
   removeTask: async (index: number) => {
