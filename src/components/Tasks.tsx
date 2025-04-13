@@ -123,7 +123,7 @@ export const Tasks = () => {
             <div
               ref={containerRef}
               className={clsx(
-                'custom-scrollbar overflow-y-scroll max-h-[75dvh] md:h-2/4 md:px-6 w-full flex flex-col items-center space-y-2.5 md:space-x-2.5 md:space-y-0 md:flex-row scroll-smooth snap-x',
+                'custom-scrollbar overflow-y-scroll md:overflow-y-hidden max-h-[75dvh] md:h-2/4 md:px-6 w-full flex flex-col items-center space-y-2.5 md:space-x-2.5 md:space-y-0 md:flex-row scroll-smooth snap-x',
                 isScrollable && 'md:overflow-x-scroll'
               )}
               onScroll={() => {
