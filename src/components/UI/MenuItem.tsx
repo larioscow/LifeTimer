@@ -22,7 +22,7 @@ export const MenuItem = ({ tittle, icon, id }: props) => {
 
   const logout = async () => {
     try {
-      await axios.post('http://localhost:3000/logout', null, {
+      await axios.post('https://life-timer-api.larioscow.dev/logout', null, {
         withCredentials: true,
       });
       setUserState(null);
