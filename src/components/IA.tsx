@@ -20,6 +20,7 @@ export const IA = () => {
       const fetchedTasks = response.data;
       fetchedTasks.forEach(async (task: Task) => {
         await addTask(task);
+        console.log('added: ', task);
       });
       await sortTasks();
     } catch (error) {
