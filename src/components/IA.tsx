@@ -22,10 +22,10 @@ export const IA = () => {
         await addTask(task);
         console.log('added: ', task);
       });
-      await sortTasks();
     } catch (error) {
       console.error('Error:', error);
     }
+    await sortTasks();
   };
 
   return (
