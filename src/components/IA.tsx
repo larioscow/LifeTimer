@@ -14,7 +14,7 @@ export const IA = () => {
     if (!input) return;
     try {
       const response = await axios.post(
-        'http://localhost:5678/webhook/e1090d14-60b0-4958-8718-29df14b636ef',
+        'https://n8n-n8n.m8gcyp.easypanel.host/webhook/e1090d14-60b0-4958-8718-29df14b636ef',
         { msg: input }
       );
       const fetchedTasks = response.data;
